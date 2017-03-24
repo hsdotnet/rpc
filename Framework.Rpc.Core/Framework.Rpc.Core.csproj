@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BD73B948-00EA-4D31-A1B9-B5A597202B1B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.Rpc.Core</RootNamespace>
+    <AssemblyName>Framework.Rpc.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetty.Buffers, Version=0.3.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Buffers-signed.0.3.2\lib\net45\DotNetty.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Codecs, Version=0.3.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Codecs-signed.0.3.2\lib\net45\DotNetty.Codecs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Common, Version=0.3.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Common-signed.0.3.2\lib\net45\DotNetty.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Handlers, Version=0.3.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Handlers-signed.0.3.2\lib\net45\DotNetty.Handlers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Transport, Version=0.3.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Transport-signed.0.3.2\lib\net45\DotNetty.Transport.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZooKeeperNet, Version=3.4.6.1, Culture=neutral, PublicKeyToken=fefd2c046da35b56, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZooKeeper.Net.3.4.6.2\lib\net40\ZooKeeperNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\AbstractClient.cs" />
+    <Compile Include="Client\ClientProxy.cs" />
+    <Compile Include="Client\IClient.cs" />
+    <Compile Include="Client\RpcClient.cs" />
+    <Compile Include="Cluster\LoadBalance\AbstractLoadBalance.cs" />
+    <Compile Include="Cluster\LoadBalance\ILoadBalance.cs" />
+    <Compile Include="Cluster\LoadBalance\LoadBalanceFactory.cs" />
+    <Compile Include="Cluster\LoadBalance\LoadBalanceType.cs" />
+    <Compile Include="Cluster\LoadBalance\RandomLoadBalance.cs" />
+    <Compile Include="ConfigSection\ConfigHelper.cs" />
+    <Compile Include="ConfigSection\ConfigurationSectionHandler.cs" />
+    <Compile Include="ConfigSection\ClientSection.cs" />
+    <Compile Include="ConfigSection\BaseSection.cs" />
+    <Compile Include="ConfigSection\ServerSection.cs" />
+    <Compile Include="Container\ClientCacheContainer.cs" />
+    <Compile Include="Container\ServerCacheContainer.cs" />
+    <Compile Include="Dto\ClientReferenceServer.cs" />
+    <Compile Include="Dto\RpcApplication.cs" />
+    <Compile Include="Dto\RpcClientConnection.cs" />
+    <Compile Include="Dto\RpcRequest.cs" />
+    <Compile Include="Dto\RpcServer.cs" />
+    <Compile Include="Dto\RpcService.cs" />
+    <Compile Include="Dto\RpcServiceMetadata.cs" />
+    <Compile Include="Dto\RpcWrapper.cs" />
+    <Compile Include="Dto\RpcResponse.cs" />
+    <Compile Include="Dto\RpcWrapperType.cs" />
+    <Compile Include="HeartBeat\IHeartBeat.cs" />
+    <Compile Include="Helper\NetworkHelper.cs" />
+    <Compile Include="Helper\ReflectionHelper.cs" />
+    <Compile Include="Listener\IListener.cs" />
+    <Compile Include="Listener\IServerListener.cs" />
+    <Compile Include="Persist\PersistProvider.cs" />
+    <Compile Include="Protocol\IAcceptor.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="Monitor\IServerMonitor.cs" />
+    <Compile Include="Monitor\IMonitor.cs" />
+    <Compile Include="Monitor\ServerMonitorImpl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\Netty\Client\NettyAcceptor.cs" />
+    <Compile Include="Protocol\Netty\Client\NettyAcceptorHandler.cs" />
+    <Compile Include="Protocol\Netty\Client\NettyClient.cs" />
+    <Compile Include="Protocol\Netty\Handler\IdleHeartBeatHandler.cs" />
+    <Compile Include="Protocol\Netty\NettyByteBufferHelper.cs" />
+    <Compile Include="Protocol\Netty\Server\NettyServerHandler.cs" />
+    <Compile Include="Protocol\ProtocolProvider.cs" />
+    <Compile Include="Protocol\ProtocolType.cs" />
+    <Compile Include="Register\IRegister.cs" />
+    <Compile Include="Register\RegisterProvider.cs" />
+    <Compile Include="Register\RegisterType.cs" />
+    <Compile Include="Register\Zookeeper\Constant.cs" />
+    <Compile Include="Register\Zookeeper\Watcher\ConsumerWatcher.cs" />
+    <Compile Include="Register\Zookeeper\Watcher\ProviderWatcher.cs" />
+    <Compile Include="Register\Zookeeper\Watcher\AbstractWatcher.cs" />
+    <Compile Include="Register\Zookeeper\ZookeeperInvoker.cs" />
+    <Compile Include="Register\Zookeeper\ZookeeperRegistry.cs" />
+    <Compile Include="Serializer\BinarySerializer.cs" />
+    <Compile Include="Serializer\ISerializer.cs" />
+    <Compile Include="Serializer\SerializerFactory.cs" />
+    <Compile Include="Serializer\SerializerType.cs" />
+    <Compile Include="Server\IInterceptor.cs" />
+    <Compile Include="Server\IServerHandler.cs" />
+    <Compile Include="Server\IServer.cs" />
+    <Compile Include="Server\LocalCacheService.cs" />
+    <Compile Include="Protocol\Netty\Server\NettyAcceptor.cs" />
+    <Compile Include="Protocol\Netty\Server\NettyAcceptorHandler.cs" />
+    <Compile Include="Server\AbstractServerHandler.cs" />
+    <Compile Include="Server\Attributes\RpcMethodAttribute.cs" />
+    <Compile Include="Server\Attributes\RpcServiceAttribute.cs" />
+    <Compile Include="Server\Attributes\RpcServiceImplAttribute.cs" />
+    <Compile Include="Server\RpcServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
