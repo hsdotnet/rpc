@@ -24,7 +24,9 @@ namespace Framework.Rpc.Core.Protocol.Netty.Client
 
             channel.WriteAndFlushAsync(data).Wait();
 
-            return null;
+            var handler = (NettyAcceptorHandler)channel.Pipeline.Last();
+
+            return handler.GetResponse();
         }
 
         public override void SetAcceptor(ClientReferenceServer referenceServer)

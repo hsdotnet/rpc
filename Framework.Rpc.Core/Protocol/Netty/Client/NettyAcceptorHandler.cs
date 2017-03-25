@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 
 using Framework.Rpc.Core.Dto;
 using Framework.Rpc.Core.Serializer;
@@ -15,6 +16,10 @@ namespace Framework.Rpc.Core.Protocol.Netty.Client
 
         private readonly ISerializer serializer;
 
+        private readonly BlockingCollection<RpcResponse> answer = new BlockingCollection<RpcResponse>();
+
+        public RpcResponse GetResponse() => this.answer.Take();
+
         public NettyAcceptorHandler(ClientCacheContainer clientCacheContainer, ISerializer serializer)
         {
             this.clientCacheContainer = clientCacheContainer;
@@ -26,7 +31,9 @@ namespace Framework.Rpc.Core.Protocol.Netty.Client
         {
             IByteBuffer byteBuffer = message as IByteBuffer;
 
-            RpcResponse rpcResponse = serializer.Deserialize<RpcResponse>(byteBuffer.ToArray());
+            RpcResponse response = serializer.Deserialize<RpcResponse>(byteBuffer.ToArray());
+
+            context.CloseAsync().ContinueWith(t => this.answer.Add(response));
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context)

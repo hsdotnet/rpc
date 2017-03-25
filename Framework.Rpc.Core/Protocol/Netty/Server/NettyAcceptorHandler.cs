@@ -16,7 +16,7 @@ namespace Framework.Rpc.Core.Protocol.Netty.Server
 
         private readonly ISerializer serializer;
 
-        private readonly AbstractServerHandler serverHandler;
+        private readonly IServerHandler serverHandler;
 
         public NettyAcceptorHandler(ServerCacheContainer cacheContainer, ISerializer serializer)
         {
@@ -33,10 +33,9 @@ namespace Framework.Rpc.Core.Protocol.Netty.Server
 
             RpcRequest request = this.serializer.Deserialize<RpcRequest>(buffer.ToArray());
 
-            serverHandler.HandleRequest(request);
-            RpcResponse rpcResponse = new ServerProxy().InvokeService(rpcRequest);
-
-            context.WriteAndFlushAsync(NettyByteBufferHelper.GetByteBuffer(serializer, rpcResponse));
+            RpcResponse response = serverHandler.HandleRequest(request);
+            
+            context.WriteAndFlushAsync(NettyByteBufferHelper.GetByteBuffer(serializer, response));
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context)

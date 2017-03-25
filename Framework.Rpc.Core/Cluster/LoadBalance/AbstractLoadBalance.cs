@@ -10,7 +10,7 @@ namespace Framework.Rpc.Core.Cluster.LoadBalance
     {
         public RpcServer GetServer(ClientCacheContainer clientCacheContainer, string appName)
         {
-            return new RpcServer() { Host = "172.17.6.47", Port = 8099, Weight = 2 };
+            return new RpcServer() { Host = "192.168.1.103", Port = 8099, Weight = 2 };
 
             List<ClientReferenceServer> referenceServers = clientCacheContainer.ClientReferenceServers.FindAll(m => m.AppName == appName);
 
