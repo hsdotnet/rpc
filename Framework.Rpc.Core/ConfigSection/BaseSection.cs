@@ -1,6 +1,6 @@
 ﻿using Framework.Rpc.Core.Serializer;
 using Framework.Rpc.Core.Registry;
-using Framework.Rpc.Core.Protocol;
+using Framework.Rpc.Core.Transport;
 
 namespace Framework.Rpc.Core.ConfigSection
 {
@@ -9,7 +9,7 @@ namespace Framework.Rpc.Core.ConfigSection
         /// <summary>
         /// 协议配置 默认Netty
         /// </summary>
-        public ProtocolType Protocol { get; set; }
+        public TransportType Transport { get; set; }
 
         /// <summary>
         /// 序列化类型

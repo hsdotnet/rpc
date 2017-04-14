@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Framework.Rpc.Core.Server;
+using Framework.Rpc.Core.Provider;
 
 namespace Rpc.Test.Server
 {

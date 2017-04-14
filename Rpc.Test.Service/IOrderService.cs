@@ -1,4 +1,4 @@
-﻿using Framework.Rpc.Core.Server.Attributes;
+﻿using Framework.Rpc.Core.Provider.Attributes;
 
 namespace Rpc.Test.Service
 {

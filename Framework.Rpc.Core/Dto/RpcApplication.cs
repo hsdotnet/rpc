@@ -1,4 +1,4 @@
-﻿using Framework.Rpc.Core.Protocol;
+﻿using Framework.Rpc.Core.Transport;
 using Framework.Rpc.Core.Registry;
 using Framework.Rpc.Core.Serializer;
 
@@ -18,7 +18,7 @@ namespace Framework.Rpc.Core.Dto
 
         public long Time { get; set; }
 
-        public ProtocolType Protocol { get; set; }
+        public TransportType Transport { get; set; }
 
         public SerializerType Serializer { get; set; }
 

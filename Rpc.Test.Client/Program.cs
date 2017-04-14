@@ -1,6 +1,6 @@
 ﻿using System;
 
-using Framework.Rpc.Core.Client;
+using Framework.Rpc.Core.Consumer;
 
 using Rpc.Test.Service;
 
@@ -10,7 +10,7 @@ namespace Rpc.Test.Client
     {
         static void Main(string[] args)
         {
-            IOrderService orderService = RpcClient.GetService<IOrderService>();
+            IOrderService orderService = RpcConsumer.GetService<IOrderService>();
 
             string orderNo = orderService.GetOrderNo();
 
