@@ -114,12 +114,12 @@
     <Compile Include="Register\RegisterProvider.cs" />
     <Compile Include="Register\RegisterType.cs" />
     <Compile Include="Register\Zookeeper\Constant.cs" />
+    <Compile Include="Register\Zookeeper\ConsumerZookeeperRegistry.cs" />
     <Compile Include="Register\Zookeeper\ProviderZookeeperRegistry.cs" />
     <Compile Include="Register\Zookeeper\Watcher\ConsumerWatcher.cs" />
     <Compile Include="Register\Zookeeper\Watcher\ProviderWatcher.cs" />
     <Compile Include="Register\Zookeeper\Watcher\AbstractWatcher.cs" />
     <Compile Include="Register\Zookeeper\ZookeeperInvoker.cs" />
-    <Compile Include="Register\Zookeeper\ConsumerZookeeperRegistry.cs" />
     <Compile Include="Serializer\BinarySerializer.cs" />
     <Compile Include="Serializer\ISerializer.cs" />
     <Compile Include="Serializer\SerializerFactory.cs" />
