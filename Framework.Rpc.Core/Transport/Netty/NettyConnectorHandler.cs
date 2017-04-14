@@ -11,7 +11,7 @@ namespace Framework.Rpc.Core.Transport.Netty
 
         public NettyConnectorHandler(IConsumerProcessor processor, ISerializer serializer) : base(serializer)
         {
-
+            _processor = processor;
         }
 
         public override void DoChannelRead(IChannelHandlerContext context, RpcResponse message)
