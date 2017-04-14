@@ -101,6 +101,7 @@
     <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Listener\IListener.cs" />
     <Compile Include="Listener\IServerListener.cs" />
+    <Compile Include="Monitor\StatisticsInfo.cs" />
     <Compile Include="Persist\PersistProvider.cs" />
     <Compile Include="Monitor\IServerMonitor.cs" />
     <Compile Include="Monitor\IMonitor.cs" />
