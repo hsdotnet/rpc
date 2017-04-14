@@ -5,26 +5,14 @@ namespace Framework.Rpc.Core.Register
 {
     public class RegisterProvider
     {
-        private readonly ServerCacheContainer serverCacheContainer;
-
-        public IRegister Register { private set; get; }
-
-        public RegisterProvider(ServerCacheContainer serverCacheContainer)
+        public IConsumerRegister GetConsumerRegister(string registerAddress)
         {
-            this.serverCacheContainer = serverCacheContainer;
-
-            InitRegistry();
+            return new ConsumerZookeeperRegistry(registerAddress);
         }
 
-        private void InitRegistry()
+        public IRegister GetRegistry(ServerCacheContainer cacheContainer)
         {
-            switch (serverCacheContainer.Application.Register)
-            {
-                case Registry.RegisterType.Zookeeper:
-                default:
-                    Register = new ZookeeperRegistry(serverCacheContainer);
-                    break;
-            }
+            return new ProviderZookeeperRegistry(cacheContainer);
         }
     }
 }

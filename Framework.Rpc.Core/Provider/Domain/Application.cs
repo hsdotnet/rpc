@@ -1,10 +1,12 @@
-﻿using Framework.Rpc.Core.Transport;
+﻿using System.Collections.Generic;
+
+using Framework.Rpc.Core.Transport;
 using Framework.Rpc.Core.Registry;
 using Framework.Rpc.Core.Serializer;
 
-namespace Framework.Rpc.Core.Dto
+namespace Framework.Rpc.Core.Provider.Domain
 {
-    public class RpcApplication
+    public class Application
     {
         public string Name { get; set; }
 
@@ -31,5 +33,12 @@ namespace Framework.Rpc.Core.Dto
         /// 注册地址
         /// </summary>
         public string RegisterAddress { get; set; }
+
+        public List<ServiceMetadata> ServiceMetadatas { get; set; }
+
+        public Application()
+        {
+            ServiceMetadatas = new List<ServiceMetadata>();
+        }
     }
 }

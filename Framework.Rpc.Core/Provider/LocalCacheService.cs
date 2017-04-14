@@ -2,7 +2,7 @@
 using System.Reflection;
 
 using Framework.Rpc.Core.ConfigSection;
-using Framework.Rpc.Core.Dto;
+using Framework.Rpc.Core.Provider.Domain;
 using Framework.Rpc.Core.Helper;
 using Framework.Rpc.Core.Provider.Attributes;
 using Framework.Rpc.Core.Container;
@@ -30,8 +30,6 @@ namespace Framework.Rpc.Core.Provider
             InitApplication();
 
             InitServiceMetadata();
-
-            InitServiceMethod();
         }
 
         private void InitApplication()
@@ -54,37 +52,34 @@ namespace Framework.Rpc.Core.Provider
             {
                 if (!type.IsInterface) continue;
 
-                RpcServiceAttribute rpcServiceAttribute = (RpcServiceAttribute)type.GetCustomAttribute(typeof(RpcServiceAttribute), false);
-                if (rpcServiceAttribute != null)
+                RpcServiceAttribute serviceAttribute = (RpcServiceAttribute)type.GetCustomAttribute(typeof(RpcServiceAttribute), false);
+                if (serviceAttribute != null)
                 {
-                    RpcServiceMetadata serviceMetadata = new RpcServiceMetadata()
+                    ServiceMetadata serviceMetadata = new ServiceMetadata()
                     {
                         ServiceName = type.FullName,
                         ServiceType = type,
-                        ServiceImplType = ReflectionHelper.GetServiceImplType(types, type)
+                        ServiceImplType = ReflectionHelper.GetServiceImplType(types, type),
                     };
-                    //foreach (MethodInfo method in type.GetMembers())
-                    //{
-                    //    RpcMethodAttribute rpcMethodAttribute = (RpcMethodAttribute)method.GetCustomAttribute(typeof(RpcMethodAttribute), false);
-                    //    if (rpcMethodAttribute != null)
-                    //    {
-                    //        serviceMetadatas.Add(method.Name, new RpcServiceMetadata
-                    //        {
-                    //            ServiceName = type.FullName,
-                    //            ServiceType = type,
-                    //            ServiceImplType = ReflectionHelper.GetServiceImplType(types, type)
-                    //        });
-                    //    }
-                    //}
 
-                    _cacheContainer.ServiceMetadatas.Add(type.FullName, serviceMetadata);
+                    foreach (MethodInfo method in type.GetMembers())
+                    {
+                        RpcMethodAttribute methodAttribute = (RpcMethodAttribute)method.GetCustomAttribute(typeof(RpcMethodAttribute), false);
+                        if (methodAttribute != null)
+                        {
+                            MethodMetadata methodMetadata = new MethodMetadata()
+                            {
+                                MethodName = methodAttribute.MethodName,
+                                Method = method
+                            };
+
+                            serviceMetadata.MethodMetadatas.Add(methodMetadata);
+                        }
+                    }
+
+                    _cacheContainer.Application.ServiceMetadatas.Add(serviceMetadata);
                 }
             }
-        }
-
-        private void InitServiceMethod()
-        {
-
         }
     }
 }

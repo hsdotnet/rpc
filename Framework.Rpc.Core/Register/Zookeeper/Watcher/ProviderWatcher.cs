@@ -9,8 +9,8 @@ namespace Framework.Rpc.Core.Register.Zookeeper.Watcher
 {
     public class ProviderWatcher : AbstractWatcher
     {
-        private ProviderWatcher(ZooKeeperNet.ZooKeeper zookeeper, ClientCacheContainer clientCacheContainer, ISerializer serializer)
-            : base(zookeeper, null, clientCacheContainer, serializer)
+        private ProviderWatcher(ZooKeeper zookeeper, ClientCacheContainer clientCacheContainer, ISerializer serializer)
+            : base(zookeeper, clientCacheContainer, serializer)
         {
 
         }

@@ -2,6 +2,7 @@
 
 using Framework.Rpc.Core.Container;
 using Framework.Rpc.Core.Dto;
+using Framework.Rpc.Core.Provider.Domain;
 using Framework.Rpc.Core.Transport;
 
 namespace Framework.Rpc.Core.Provider
@@ -19,13 +20,23 @@ namespace Framework.Rpc.Core.Provider
         {
             RpcResponse response = new RpcResponse() { RequestId = request.RequestId };
 
-            RpcServiceMetadata serviceMetadata = _cacheContainer.ServiceMetadatas[request.ServiceName];
+            ServiceMetadata serviceMetadata = _cacheContainer.Application.ServiceMetadatas.Find(m => m.ServiceName == request.ServiceName);
+
+            if (serviceMetadata == null)
+            {
+
+            }
 
             object service = Activator.CreateInstance(serviceMetadata.ServiceImplType);
 
-            var method = serviceMetadata.ServiceImplType.GetMethod(request.MethodName);
+            MethodMetadata methodMetadata = serviceMetadata.MethodMetadatas.Find(m => m.MethodName == request.MethodName);
 
-            response.Result = method.Invoke(service, request.Parameters);
+            if (methodMetadata == null)
+            {
+
+            }
+
+            response.Result = methodMetadata.Method.Invoke(service, request.Parameters);
 
             channel.Write(response);
         }

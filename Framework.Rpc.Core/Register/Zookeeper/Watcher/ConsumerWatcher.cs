@@ -8,7 +8,7 @@ namespace Framework.Rpc.Core.Register.Zookeeper.Watcher
     public class ConsumerWatcher : AbstractWatcher
     {
         public ConsumerWatcher(ZooKeeperNet.ZooKeeper zooKeeper, ClientCacheContainer clientCacheContainer, ISerializer serializer)
-            : base(zooKeeper, null, clientCacheContainer, serializer)
+            : base(zooKeeper, clientCacheContainer, serializer)
         {
 
         }

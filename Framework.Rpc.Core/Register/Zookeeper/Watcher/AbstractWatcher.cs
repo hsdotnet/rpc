@@ -7,23 +7,31 @@ namespace Framework.Rpc.Core.Register.Zookeeper.Watcher
 {
     public abstract class AbstractWatcher : IWatcher
     {
-        protected readonly ZooKeeperNet.ZooKeeper zookeeper;
+        protected readonly ZooKeeper _zookeeper;
 
-        protected readonly ServerCacheContainer serverCacheContainer;
+        protected readonly ServerCacheContainer _serverCacheContainer;
 
-        protected readonly ClientCacheContainer clientCacheContainer;
+        protected readonly ClientCacheContainer _clientCacheContainer;
 
-        protected readonly ISerializer serializer;
+        protected readonly ISerializer _serializer;
 
-        public AbstractWatcher(ZooKeeperNet.ZooKeeper zookeeper, ServerCacheContainer serverCacheContainer, ClientCacheContainer clientCacheContainer, ISerializer serializer)
+        public AbstractWatcher(ZooKeeper zookeeper, ISerializer serializer)
         {
-            this.zookeeper = zookeeper;
+            _zookeeper = zookeeper;
 
-            this.serverCacheContainer = serverCacheContainer;
+            _serializer = serializer;
+        }
 
-            this.clientCacheContainer = clientCacheContainer;
+        public AbstractWatcher(ZooKeeper zookeeper, ClientCacheContainer clientCacheContainer, ISerializer serializer)
+            : this(zookeeper, serializer)
+        {
+            _clientCacheContainer = clientCacheContainer;
+        }
 
-            this.serializer = serializer;
+        public AbstractWatcher(ZooKeeper zookeeper, ServerCacheContainer serverCacheContainer, ISerializer serializer)
+            : this(zookeeper, serializer)
+        {
+            _serverCacheContainer = serverCacheContainer;
         }
 
         public void Process(WatchedEvent @event)

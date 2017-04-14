@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 using Framework.Rpc.Core.Dto;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
 
 namespace Framework.Rpc.Core.Container
 {
@@ -10,13 +10,13 @@ namespace Framework.Rpc.Core.Container
     {
         public ConcurrentDictionary<string, TaskCompletionSource<RpcResponse>> ResponseBag { get; set; }
 
-        public List<ClientReferenceServer> ClientReferenceServers { get; set; }
+        public List<ReferenceServer> ReferenceServers { get; set; }
 
         public ClientCacheContainer()
         {
             ResponseBag = new ConcurrentDictionary<string, TaskCompletionSource<RpcResponse>>();
 
-            ClientReferenceServers = new List<ClientReferenceServer>();
+            ReferenceServers = new List<ReferenceServer>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using ZooKeeperNet;
 using Org.Apache.Zookeeper.Data;
@@ -14,9 +15,9 @@ namespace Framework.Rpc.Core.Register.Zookeeper
         /// <param name="sessionTimeout"></param>
         /// <param name="watcher"></param>
         /// <returns></returns>
-        public ZooKeeperNet.ZooKeeper Create(string connectstring, int sessionTimeout, IWatcher watcher)
+        public ZooKeeper Create(string connectstring, int sessionTimeout, IWatcher watcher)
         {
-            ZooKeeperNet.ZooKeeper zookeeper = new ZooKeeperNet.ZooKeeper(connectstring, new TimeSpan(0, 0, 0, sessionTimeout), watcher);
+            ZooKeeper zookeeper = new ZooKeeper(connectstring, new TimeSpan(0, 0, 0, sessionTimeout), watcher);
 
             return zookeeper;
         }
@@ -25,20 +26,9 @@ namespace Framework.Rpc.Core.Register.Zookeeper
         /// 关闭ZooKeeper客户端连接
         /// </summary>
         /// <param name="zookeeper"></param>
-        public void close(ZooKeeperNet.ZooKeeper zookeeper)
+        public void close(ZooKeeper zookeeper)
         {
             zookeeper.Dispose();
-        }
-
-        /// <summary>
-        /// 判断路径是否存在
-        /// </summary>
-        /// <param name="zookeeper"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public bool PathExist(ZooKeeperNet.ZooKeeper zookeeper, string path)
-        {
-            return GetPathStat(zookeeper, path) != null;
         }
 
         /// <summary>
@@ -47,9 +37,23 @@ namespace Framework.Rpc.Core.Register.Zookeeper
         /// <param name="zookeeper"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public Stat GetPathStat(ZooKeeperNet.ZooKeeper zookeeper, string path)
+        public Stat GetPathStat(ZooKeeper zookeeper, string path)
         {
             return zookeeper.Exists(path, false);
+        }
+
+        public void CreatePersistentNode(ZooKeeper zookeeper, string path)
+        {
+            Stat stat = GetPathStat(zookeeper, path);
+            if (stat == null)
+                zookeeper.Create(Constant.ROOT_PATH, new byte[] { }, Ids.OPEN_ACL_UNSAFE, CreateMode.Persistent);
+        }
+
+        public void CreateEphemeralNode(ZooKeeper zookeeper, string path, string address)
+        {
+            Stat stat = GetPathStat(zookeeper, path);
+            if (stat == null)
+                zookeeper.Create(path, Encoding.UTF8.GetBytes(address), Ids.OPEN_ACL_UNSAFE, CreateMode.Ephemeral);
         }
     }
 }

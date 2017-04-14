@@ -29,12 +29,12 @@ namespace Framework.Rpc.Core.Consumer
 
             _transportProvider = new TransportProvider(_cacheContainer, serializer);
 
-            _connector = _transportProvider.GetConnector(); ;
+            _connector = _transportProvider.GetConnector();
         }
 
         public RpcResponse Send(RpcRequest request)
         {
-            ServerInfo server = _loadBalance.GetServer(_cacheContainer, request.AppName);
+            ServerInfo server = _loadBalance.GetServer(request.AppName);
 
             IChannel channel = _connector.Connect(server.Host, server.Port);
 
