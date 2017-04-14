@@ -104,7 +104,6 @@
     <Compile Include="Listener\IListener.cs" />
     <Compile Include="Listener\IServerListener.cs" />
     <Compile Include="Persist\PersistProvider.cs" />
-    <Compile Include="IService.cs" />
     <Compile Include="Monitor\IServerMonitor.cs" />
     <Compile Include="Monitor\IMonitor.cs" />
     <Compile Include="Monitor\ServerMonitorImpl.cs" />

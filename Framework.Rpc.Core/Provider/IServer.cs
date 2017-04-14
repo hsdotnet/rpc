@@ -2,8 +2,12 @@
 
 namespace Framework.Rpc.Core.Provider
 {
-    public interface IServer : IService
+    public interface IServer
     {
+        void Start();
+
+        void Stop();
+
         //List<IInterceptor> Interceptors { get; }
     }
 }
