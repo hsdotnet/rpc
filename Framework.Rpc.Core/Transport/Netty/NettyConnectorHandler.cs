@@ -7,18 +7,18 @@ namespace Framework.Rpc.Core.Transport.Netty
 {
     public class NettyConnectorHandler : AbstractChannelHandlerAdapter<RpcResponse>
     {
-        private readonly IConsumerProcessor _processor;
+        private readonly IMessageHandler _handler;
 
-        public NettyConnectorHandler(IConsumerProcessor processor, ISerializer serializer) : base(serializer)
+        public NettyConnectorHandler(IMessageHandler handler, ISerializer serializer) : base(serializer)
         {
-            _processor = processor;
+            _handler = handler;
         }
 
         public override void DoChannelRead(IChannelHandlerContext context, RpcResponse message)
         {
             IChannel channel = new NettyChannel(_serializer, context.Channel);
 
-            _processor.HandleMessage(channel, message);
+            _handler.ReceiveAsync(message);
         }
     }
 }

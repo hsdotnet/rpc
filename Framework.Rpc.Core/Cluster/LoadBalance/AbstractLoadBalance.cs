@@ -15,7 +15,7 @@ namespace Framework.Rpc.Core.Cluster.LoadBalance
 
         public ServerInfo GetServer(string appName)
         {
-            //return new ServerInfo() { Host = "172.17.17.43", Port = 8099, Weight = 2 };
+            return new ServerInfo() { Host = "172.17.17.43", Port = 8099, Weight = 2 };
 
             List<ServerInfo> serverInfos = _register.FindService(appName);
 

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Threading.Tasks;
+using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Proxies;
 
@@ -8,11 +9,11 @@ namespace Framework.Rpc.Core.Consumer
 {
     public class ConsumerProxy<T> : RealProxy
     {
-        private readonly IConsumer _consumer;
+        private readonly AbstractCallInvoker _callInvoker;
 
-        public ConsumerProxy(IConsumer consumer) : base(typeof(T))
+        public ConsumerProxy(AbstractCallInvoker callInvoker) : base(typeof(T))
         {
-            _consumer = consumer;
+            _callInvoker = callInvoker;
         }
 
         public override IMessage Invoke(IMessage message)
@@ -29,7 +30,7 @@ namespace Framework.Rpc.Core.Consumer
                 Parameters = callMessage.Args
             };
 
-            RpcResponse response = _consumer.Send(request);
+            var response = _callInvoker.Call(request);
 
             return new ReturnMessage(response.Result, null, 0, callMessage.LogicalCallContext, callMessage);
         }

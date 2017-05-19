@@ -1,4 +1,6 @@
-﻿using Framework.Rpc.Core.Provider.Attributes;
+﻿using System.Threading.Tasks;
+
+using Framework.Rpc.Core.Provider.Attributes;
 
 namespace Rpc.Test.Service
 {
@@ -7,5 +9,8 @@ namespace Rpc.Test.Service
     {
         [RpcMethod("GetOrderNo")]
         string GetOrderNo();
+
+        [RpcMethod("GetOrderNoAsync")]
+        Task<string> GetOrderNoAsync();
     }
 }

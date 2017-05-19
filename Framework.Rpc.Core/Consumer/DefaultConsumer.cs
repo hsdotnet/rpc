@@ -10,30 +10,15 @@ namespace Framework.Rpc.Core.Consumer
 {
     public class DefaultConsumer : AbstractConsumer
     {
-        public DefaultConsumer(ClientCacheContainer cacheContainer, ILoadBalance loadBalance, ISerializer serializer)
-            : base(cacheContainer, loadBalance, serializer)
+        public DefaultConsumer(IMessageHandler handler, ClientCacheContainer cacheContainer, ILoadBalance loadBalance, ISerializer serializer)
+            : base(handler, cacheContainer, loadBalance, serializer)
         {
 
         }
 
-        public override RpcResponse DoSend(IChannel channel, RpcRequest request)
+        public override Task DoSend(IChannel channel, RpcRequest request)
         {
-            TaskCompletionSource<RpcResponse> taskCompletionSource = new TaskCompletionSource<RpcResponse>();
-
-            _cacheContainer.ResponseBag.TryAdd(request.RequestId, taskCompletionSource);
-
-            channel.Write(request);
-
-            if (!taskCompletionSource.Task.Wait(1000 * 10))
-            {
-                _cacheContainer.ResponseBag.TryRemove(request.RequestId, out taskCompletionSource);
-
-                //throw new TimeoutException("timeout, cause by waiting for reply ！");
-            }
-
-            _cacheContainer.ResponseBag.TryRemove(request.RequestId, out taskCompletionSource);
-
-            return taskCompletionSource.Task.Result;
+            return channel.Write(request);
         }
     }
 }

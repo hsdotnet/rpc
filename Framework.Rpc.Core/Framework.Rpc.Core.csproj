@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractCallInvoker.cs" />
     <Compile Include="Cluster\LoadBalance\AbstractLoadBalance.cs" />
     <Compile Include="Cluster\LoadBalance\ILoadBalance.cs" />
     <Compile Include="Cluster\LoadBalance\LoadBalanceFactory.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="ConfigSection\ServerSection.cs" />
     <Compile Include="Consumer\AbstractConsumer.cs" />
     <Compile Include="Consumer\ConsumerProxy.cs" />
+    <Compile Include="Consumer\ConsumerMessageHandler.cs" />
+    <Compile Include="Consumer\DefaultCallInvoker.cs" />
     <Compile Include="Consumer\RpcConsumer.cs" />
     <Compile Include="Consumer\DefaultConsumerProcessor.cs" />
     <Compile Include="Consumer\IConsumer.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="HeartBeat\IHeartBeat.cs" />
     <Compile Include="Helper\NetworkHelper.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
+    <Compile Include="IMessageHandler.cs" />
     <Compile Include="Listener\IListener.cs" />
     <Compile Include="Listener\IServerListener.cs" />
     <Compile Include="Monitor\StatisticsInfo.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Provider\Domain\Application.cs" />
     <Compile Include="Provider\Domain\MethodMetadata.cs" />
     <Compile Include="Provider\Domain\ServiceMetadata.cs" />
+    <Compile Include="RecievedMessageEventArgs.cs" />
     <Compile Include="Register\IConsumerRegister.cs" />
     <Compile Include="Register\IRegister.cs" />
     <Compile Include="Register\RegisterProvider.cs" />

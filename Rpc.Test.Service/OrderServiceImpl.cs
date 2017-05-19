@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using Framework.Rpc.Core.Provider.Attributes;
 
 namespace Rpc.Test.Service
@@ -10,6 +10,11 @@ namespace Rpc.Test.Service
         public string GetOrderNo()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        public Task<string> GetOrderNoAsync()
+        {
+            return Task<string>.Factory.StartNew(() => { return "abc"; });
         }
     }
 }

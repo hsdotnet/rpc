@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 
 using Framework.Rpc.Core.Serializer;
 
@@ -66,18 +67,16 @@ namespace Framework.Rpc.Core.Transport.Netty
             return _channel.RemoteAddress.Serialize();
         }
 
-        public IChannel Write(object message)
+        public Task Write(object message)
         {
             byte[] data = _serializer.Serialize(message);
 
             var buffer = Unpooled.Buffer(data.Length, data.Length);
 
-            _channel.WriteAndFlushAsync(buffer.WriteBytes(data));
-
-            return new NettyChannel(_serializer, _channel);
+            return _channel.WriteAndFlushAsync(buffer.WriteBytes(data));
         }
 
-        public IChannel Write(object message, IChannelListener listener)
+        public Task Write(object message, IChannelListener listener)
         {
             throw new NotImplementedException();
         }

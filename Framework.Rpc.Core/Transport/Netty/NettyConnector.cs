@@ -10,13 +10,13 @@ namespace Framework.Rpc.Core.Transport.Netty
 {
     public class NettyConnector : AbstractNettyConnector
     {
-        private readonly IConsumerProcessor _processor;
+        private readonly IMessageHandler _handler;
 
         private readonly ISerializer _serializer;
 
-        public NettyConnector(IConsumerProcessor processor, ISerializer serializer)
+        public NettyConnector(IMessageHandler handler, ISerializer serializer)
         {
-            _processor = processor;
+            _handler = handler;
 
             _serializer = serializer;
 
@@ -28,7 +28,7 @@ namespace Framework.Rpc.Core.Transport.Netty
             bootstrap.Handler(new ActionChannelInitializer<TcpSocketChannel>((tcpSocketChannel) =>
                {
                    IChannelPipeline pipeline = tcpSocketChannel.Pipeline;
-                   pipeline.AddLast(new NettyConnectorHandler(_processor, _serializer));
+                   pipeline.AddLast(new NettyConnectorHandler(_handler, _serializer));
                }));
 
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(host), port);
@@ -44,8 +44,7 @@ namespace Framework.Rpc.Core.Transport.Netty
             bootstrap.Channel<TcpSocketChannel>();
 
             bootstrap.Option(ChannelOption.TcpNodelay, true);
-            bootstrap.Option(ChannelOption.SoReuseaddr, true);
-            bootstrap.Option(ChannelOption.SoKeepalive, true);
+            bootstrap.Option(ChannelOption.ConnectTimeout, TimeSpan.FromSeconds(3));
         }
 
         protected override void DoProcessor(IProviderProcessor processor)

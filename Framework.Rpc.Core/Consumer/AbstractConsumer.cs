@@ -1,9 +1,12 @@
-﻿using Framework.Rpc.Core.Dto;
+﻿using System.Threading.Tasks;
+
+using Framework.Rpc.Core.Dto;
 using Framework.Rpc.Core.Container;
 using Framework.Rpc.Core.Transport;
 using Framework.Rpc.Core.Cluster.LoadBalance;
 using Framework.Rpc.Core.Serializer;
 using Framework.Rpc.Core.Register;
+using System;
 
 namespace Framework.Rpc.Core.Consumer
 {
@@ -17,10 +20,18 @@ namespace Framework.Rpc.Core.Consumer
 
         private readonly TransportProvider _transportProvider;
 
+        private readonly IMessageHandler _handler;
+
         protected readonly IConnector _connector;
 
-        public AbstractConsumer(ClientCacheContainer cacheContainer, ILoadBalance loadBalance, ISerializer serializer)
+        public event EventHandler<RecievedMessageEventArgs> Recieved;
+
+        public AbstractConsumer(IMessageHandler handler, ClientCacheContainer cacheContainer, ILoadBalance loadBalance, ISerializer serializer)
         {
+            _handler = handler;
+
+            _handler.Recieved += Message_Recieved;
+
             _cacheContainer = cacheContainer;
 
             _loadBalance = loadBalance;
@@ -29,10 +40,15 @@ namespace Framework.Rpc.Core.Consumer
 
             _transportProvider = new TransportProvider(_cacheContainer, serializer);
 
-            _connector = _transportProvider.GetConnector();
+            _connector = _transportProvider.GetConnector(_handler);
         }
 
-        public RpcResponse Send(RpcRequest request)
+        private void Message_Recieved(object sender, RecievedMessageEventArgs e)
+        {
+            Recieved?.Invoke(sender, e);
+        }
+
+        public Task Send(RpcRequest request)
         {
             ServerInfo server = _loadBalance.GetServer(request.AppName);
 
@@ -41,6 +57,6 @@ namespace Framework.Rpc.Core.Consumer
             return DoSend(channel, request);
         }
 
-        public abstract RpcResponse DoSend(IChannel channel, RpcRequest request);
+        public abstract Task DoSend(IChannel channel, RpcRequest request);
     }
 }

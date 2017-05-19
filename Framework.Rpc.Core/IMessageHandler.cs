@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 using Framework.Rpc.Core.Dto;
 
-namespace Framework.Rpc.Core.Consumer
+namespace Framework.Rpc.Core
 {
-    public interface IConsumer
+    public interface IMessageHandler
     {
-        Task Send(RpcRequest request);
+        Task ReceiveAsync(RpcResponse response);
 
         event EventHandler<RecievedMessageEventArgs> Recieved;
     }

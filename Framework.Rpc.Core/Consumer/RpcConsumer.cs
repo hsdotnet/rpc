@@ -20,9 +20,9 @@ namespace Framework.Rpc.Core.Consumer
 
         public static T GetService<T>()
         {
-            IConsumer consumer = new DefaultConsumer(_cacheContainer, _loadBalance, _serializer);
+            IConsumer consumer = new DefaultConsumer(new ConsumerMessageHandler(), _cacheContainer, _loadBalance, _serializer);
 
-            T service = (T)new ConsumerProxy<T>(consumer).GetTransparentProxy();
+            T service = (T)new ConsumerProxy<T>(new DefaultCallInvoker(consumer)).GetTransparentProxy();
 
             return service;
         }

@@ -12,7 +12,7 @@ namespace Rpc.Test.Client
         {
             IOrderService orderService = RpcConsumer.GetService<IOrderService>();
 
-            string orderNo = orderService.GetOrderNo();
+            var orderNo = orderService.GetOrderNo();
 
             Console.WriteLine(orderNo);
         }

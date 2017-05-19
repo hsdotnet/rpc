@@ -42,9 +42,9 @@ namespace Framework.Rpc.Core.Register
             }
         }
 
-        public IConnector GetConnector()
+        public IConnector GetConnector(IMessageHandler handler)
         {
-            return new NettyConnector(new DefaultConsumerProcessor(_clientCacheContainer), _serializer);
+            return new NettyConnector(handler, _serializer);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading.Tasks;
 
 namespace Framework.Rpc.Core.Transport
 {
@@ -10,9 +11,9 @@ namespace Framework.Rpc.Core.Transport
 
         bool IsActive();
 
-        IChannel Write(object message);
+        Task Write(object message);
 
-        IChannel Write(object message, IChannelListener listener);
+        Task Write(object message, IChannelListener listener);
 
         void OpenAutoReconnection();
 
